@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  // ============ STATE ============
   let target = 2000,
     nama = "Ni Luh Sari",
     desa = "Desa Padang Bulia",
@@ -14,12 +13,11 @@
   const $ = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
 
-  // ============ TAB NAVIGATION ============
-  function switchTab(tabName) {
+  function switchTab(name) {
     $$('.tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
     $$('.panel').forEach(p => p.classList.remove('panel--active'));
-    const btn = document.querySelector(`[data-tab="${tabName}"]`);
-    const panel = $(`#${tabName}`);
+    const btn = document.querySelector(`[data-tab="${name}"]`);
+    const panel = $(`#${name}`);
     if (btn) btn.classList.add('tab-btn--active');
     if (panel) panel.classList.add('panel--active');
   }
@@ -29,7 +27,6 @@
     refresh();
   }));
 
-  // ============ HELPERS ============
   function fRp(v) { return 'Rp' + Math.floor(v).toLocaleString('id-ID'); }
   function fDate(d) { const t = new Date(d); return t.getDate() + '/' + (t.getMonth() + 1) + '/' + t.getFullYear(); }
   function fDateISO(d) { return d.toISOString().split('T')[0]; }
@@ -69,14 +66,18 @@
       $('#editKosong').style.display = 'none';
       transaksi.forEach((t, i) => {
         el.innerHTML += `
-          <div class="flex items-center justify-between py-2.5 border-b border-[#f5f3f0] gap-2">
+          <div class="flex items-center justify-between py-3 border-b border-[#e2e8f0] gap-3">
             <div class="flex-1 min-w-0">
               <div class="text-[11px] text-muted">${fDateTime(t.tanggal)}</div>
-              <div class="font-semibold text-sm">${fRp(t.nominal)} <span class="text-xs text-sub">(${t.hari} hari)</span></div>
+              <div class="font-semibold text-sm text-text">${fRp(t.nominal)} <span class="text-xs text-sub">(${t.hari} hari)</span></div>
             </div>
-            <div class="flex gap-1.5">
-              <button class="edit-btn px-3 py-1.5 rounded-chip border border-[#ddd] bg-white text-[11px] font-semibold text-[#555] cursor-pointer" data-index="${i}">Edit</button>
-              <button class="hapus-btn px-3 py-1.5 rounded-chip border border-[#fcc] bg-white text-[11px] font-semibold text-danger cursor-pointer" data-index="${i}">Hapus</button>
+            <div class="flex gap-2">
+              <button class="edit-btn px-3 py-1.5 rounded-chip border-2 border-[#e2e8f0] bg-white text-xs font-semibold text-accent cursor-pointer hover:bg-blue-50 transition-all" data-index="${i}">
+                <i class="bi bi-pencil-fill"></i> Edit
+              </button>
+              <button class="hapus-btn px-3 py-1.5 rounded-chip border-2 border-[#fee2e2] bg-white text-xs font-semibold text-danger cursor-pointer hover:bg-danger-light transition-all" data-index="${i}">
+                <i class="bi bi-trash-fill"></i> Hapus
+              </button>
             </div>
           </div>`;
       });
@@ -95,18 +96,22 @@
       let r = 0;
       transaksi.forEach(t => {
         r += t.nominal;
-        tb.innerHTML += `<tr><td class="p-2 border-b border-[#f5f3f0]">${fDate(t.tanggal)}</td><td class="p-2 border-b border-[#f5f3f0]">${fRp(t.nominal)}</td><td class="p-2 border-b border-[#f5f3f0]">${t.hari} hr</td><td class="p-2 border-b border-[#f5f3f0] font-semibold text-green">${fRp(r)}</td></tr>`;
+        tb.innerHTML += `
+          <tr class="hover:bg-[#f8fafc] transition-all">
+            <td class="p-3 border-b border-[#e2e8f0] text-text-soft">${fDate(t.tanggal)}</td>
+            <td class="p-3 border-b border-[#e2e8f0] font-semibold text-text">${fRp(t.nominal)}</td>
+            <td class="p-3 border-b border-[#e2e8f0] text-center text-sub">${t.hari} hr</td>
+            <td class="p-3 border-b border-[#e2e8f0] text-right font-bold text-success">${fRp(r)}</td>
+          </tr>`;
       });
     }
   }
 
-  // ============ STRUK ============
   function bangunStruk(trx) {
     const tglMulai = new Date(trx.tanggal);
     const jml = trx.hari;
     const tglAkhir = new Date(tglMulai);
     tglAkhir.setDate(tglAkhir.getDate() + jml - 1);
-
     let h = '';
     h += `<div class="center judul">-JIMPITAN Mangsatria-</div>`;
     h += `<div class="center sub">${desa}</div>`;
@@ -124,30 +129,18 @@
     h += `<div class="garis"></div>`;
     h += `<div class="row total"><span>Jumlah Setor</span><span class="kanan">${fRp(trx.nominal)}</span></div>`;
     h += `<div class="garis"></div>`;
-    h += `<div class="center">Terima kasih</div>`;
-    h += `<div class="center">Om Swastiastu 🙏</div>`;
+    h += `<div class="center">Terima kasih</div><div class="center">Om Swastiastu 🙏</div>`;
     return h;
   }
 
-  // ============ GENERATE PNG ============
   async function generatePNG(html) {
     $('#strukContent').innerHTML = html;
     const wrapper = document.querySelector('.struk-wrapper');
     wrapper.style.cssText = 'left:0;top:0;z-index:1;position:fixed;display:block;background:#fff;width:340px;height:auto;';
     await document.fonts.ready;
     return new Promise((resolve) => {
-      html2canvas($('#strukContent'), {
-        scale: 2,
-        backgroundColor: '#ffffff',
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-        windowWidth: 340,
-        windowHeight: $('#strukContent').scrollHeight
-      }).then(canvas => {
-        wrapper.style.cssText = 'left:-9999px;z-index:-1;position:fixed;';
-        resolve(canvas.toDataURL('image/png'));
-      });
+      html2canvas($('#strukContent'), { scale: 2, backgroundColor: '#ffffff', logging: false, useCORS: true, allowTaint: true, windowWidth: 340, windowHeight: $('#strukContent').scrollHeight })
+        .then(canvas => { wrapper.style.cssText = 'left:-9999px;z-index:-1;position:fixed;'; resolve(canvas.toDataURL('image/png')); });
     });
   }
 
@@ -175,12 +168,9 @@
       } else {
         window.open('https://wa.me/?text=' + encodeURIComponent('*JIMPITAN*\n' + nama + '\nSetor: ' + fRp(trx.nominal) + '\n🙏'), '_blank');
       }
-    } catch (e) {
-      toast('⚠️ Gagal share, struk tetap tersimpan');
-    }
+    } catch (e) { toast('⚠️ Gagal share, struk tetap tersimpan'); }
   }
 
-  // ============ SETOR ============
   function setor(nominal) {
     if (!aktif) return alert('Atur dulu di tab Atur'), switchTab('setup');
     if (isNaN(nominal) || nominal <= 0) return;
@@ -191,7 +181,6 @@
     saveDanShare(bangunStruk(trx), trx);
   }
 
-  // ============ EVENT LISTENERS ============
   $('#btnSetor').addEventListener('click', () => setor(parseInt($('#nominalSetor').value)));
   $('#nominalSetor').addEventListener('keypress', e => { if (e.key === 'Enter') setor(parseInt($('#nominalSetor').value)); });
   $('#chipRow').addEventListener('click', e => { if (e.target.classList.contains('chip')) setor(parseInt(e.target.dataset.hari) * target); });
@@ -209,17 +198,18 @@
     switchTab('setor');
   });
 
-  // Edit & Hapus
   $('#editList').addEventListener('click', e => {
-    const i = parseInt(e.target.dataset.index);
+    const i = parseInt(e.target.closest('button')?.dataset?.index);
     if (isNaN(i)) return;
-    if (e.target.classList.contains('edit-btn')) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.classList.contains('edit-btn')) {
       $('#editIndex').value = i;
       $('#editNominal').value = transaksi[i].nominal;
       $('#modalEdit').classList.add('show');
       setTimeout(() => $('#editNominal').focus(), 100);
     }
-    if (e.target.classList.contains('hapus-btn')) {
+    if (btn.classList.contains('hapus-btn')) {
       $('#hapusIndex').value = i;
       $('#hapusInfo').textContent = 'Hapus ' + fRp(transaksi[i].nominal) + ' (' + transaksi[i].hari + ' hari)?';
       $('#modalHapus').classList.add('show');
@@ -247,12 +237,10 @@
     $('#modalHapus').classList.remove('show');
   });
 
-  // Tutup modal klik luar
   document.querySelectorAll('.modal-overlay').forEach(o => {
     o.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
   });
 
-  // Reset
   $('#btnReset').addEventListener('click', () => {
     if (confirm('Hapus semua data?')) {
       transaksi = [];
@@ -267,13 +255,9 @@
     }
   });
 
-  // ============ PWA ============
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.log('SW failed:', err));
+    navigator.serviceWorker.register('sw.js').then(reg => console.log('SW:', reg.scope)).catch(err => console.log('SW fail:', err));
   }
 
-  // ============ INIT ============
   refresh();
 })();
