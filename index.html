@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jimpitan Bali</title>
+  <title>Jimpitan Bali - Mangsatria</title>
 
-  <!-- Manifest PWA -->
-  <link rel="manifest" href="/jimpitan-bali/manifest.json">
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a1a1a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Jimpitan Bali">
-  <link rel="apple-touch-icon" href="/jimpitan-bali/assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/jimpitan-bali/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- Font Monospace -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,112 +26,138 @@
 </head>
 <body>
 
-  <div class="header">
-    <h1>Jimpitan Bali</h1>
-    <span>6 Sasih</span>
-  </div>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header__title">Jimpitan Bali</h1>
+    <span class="header__badge">6 Sasih</span>
+  </header>
 
   <!-- Tabs -->
-  <div class="tabs">
-    <button class="active" data-tab="setup">Atur</button>
-    <button data-tab="setor">Setor</button>
-    <button data-tab="edit">Edit</button>
-    <button data-tab="riwayat">Riwayat</button>
-  </div>
+  <nav class="tabs">
+    <button class="tabs__btn tabs__btn--active" data-tab="setup">Atur</button>
+    <button class="tabs__btn" data-tab="setor">Setor</button>
+    <button class="tabs__btn" data-tab="edit">Edit</button>
+    <button class="tabs__btn" data-tab="riwayat">Riwayat</button>
+  </nav>
 
-  <!-- TAB Atur -->
-  <div class="tab-panel active" id="setup">
+  <!-- Panel Setup -->
+  <div class="panel panel--active" id="setup">
     <div class="card">
-      <label>Nasabah</label>
-      <input list="nasabahList" id="namaNasabah" placeholder="Pilih atau ketik nama" value="Ni Luh Sari" autocomplete="off">
+      <label class="form-label">Nasabah</label>
+      <input list="nasabahList" id="namaNasabah" class="form-input" placeholder="Pilih atau ketik nama" value="Ni Luh Sari" autocomplete="off">
       <datalist id="nasabahList">
         <option value="Ni Luh Sari"><option value="I Made Arta"><option value="I Nyoman Budi">
         <option value="Ni Ketut Ayu"><option value="I Gusti Ngurah"><option value="I Kadek Dewi">
       </datalist>
-      <div class="card-row">
-        <div><label>Target/hari</label><input type="number" id="targetHarian" value="2000" min="500" step="500"></div>
-        <div><label>Desa</label><input type="text" id="desa" value="Desa Padang Bulia"></div>
+      <div class="card__row">
+        <div>
+          <label class="form-label">Target/hari</label>
+          <input type="number" id="targetHarian" class="form-input" value="2000" min="500" step="500">
+        </div>
+        <div>
+          <label class="form-label">Desa</label>
+          <input type="text" id="desa" class="form-input" value="Desa Padang Bulia">
+        </div>
       </div>
       <button class="btn" id="btnMulai">Mulai Tabungan</button>
     </div>
   </div>
 
-  <!-- TAB Setor -->
-  <div class="tab-panel" id="setor">
+  <!-- Panel Setor -->
+  <div class="panel" id="setor">
     <div class="card">
-      <div class="flex-between" style="margin-bottom:10px;">
-        <strong id="namaSetor">-</strong><span class="text-sm" id="targetSetor">-</span>
+      <div class="flex--between" style="margin-bottom:10px;">
+        <strong id="namaSetor">-</strong>
+        <span class="text-sm" id="targetSetor">-</span>
       </div>
-      <label>Nominal Setor</label>
-      <div class="chip-row" id="chipRow">
-        <span class="chip" data-hari="1">1 hari</span><span class="chip" data-hari="2">2 hari</span>
-        <span class="chip" data-hari="3">3 hari</span><span class="chip" data-hari="5">5 hari</span>
+      <label class="form-label">Nominal Setor</label>
+      <div class="chips" id="chipRow">
+        <span class="chip" data-hari="1">1 hari</span>
+        <span class="chip" data-hari="2">2 hari</span>
+        <span class="chip" data-hari="3">3 hari</span>
+        <span class="chip" data-hari="5">5 hari</span>
         <span class="chip" data-hari="7">7 hari</span>
       </div>
-      <input type="number" id="nominalSetor" placeholder="Nominal bebas" min="0">
-      <button class="btn btn-wa" id="btnSetor">💾 Setor & Kirim WA</button>
+      <input type="number" id="nominalSetor" class="form-input" placeholder="Nominal bebas" min="0">
+      <button class="btn btn--wa" id="btnSetor">💾 Setor & Kirim WA</button>
     </div>
     <div class="card">
-      <div class="flex-between text-sm" style="margin-bottom:4px;">
+      <div class="flex--between text-sm" style="margin-bottom:4px;">
         <span>Progress</span><span><strong id="hariDibayar">0</strong> / 210</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="flex-between text-sm"><span id="sisaHari">210 tersisa</span><span id="ketLebih"></span></div>
+      <div class="progress"><div class="progress__fill" id="progressFill"></div></div>
+      <div class="flex--between text-sm">
+        <span id="sisaHari">210 tersisa</span><span id="ketLebih"></span>
+      </div>
     </div>
   </div>
 
-  <!-- TAB Edit -->
-  <div class="tab-panel" id="edit">
+  <!-- Panel Edit -->
+  <div class="panel" id="edit">
     <div class="card">
-      <div class="flex-between" style="margin-bottom:12px;">
+      <div class="flex--between" style="margin-bottom:12px;">
         <strong id="namaEdit">-</strong><span class="text-sm" id="jmlTransaksi">0</span>
       </div>
-      <div id="editList"></div><div class="empty" id="editKosong">Belum ada transaksi</div>
+      <div id="editList"></div>
+      <div class="empty" id="editKosong">Belum ada transaksi</div>
     </div>
   </div>
 
-  <!-- TAB Riwayat -->
-  <div class="tab-panel" id="riwayat">
+  <!-- Panel Riwayat -->
+  <div class="panel" id="riwayat">
     <div class="card">
-      <div class="flex-between" style="margin-bottom:8px;">
+      <div class="flex--between" style="margin-bottom:8px;">
         <strong id="namaRiwayat">-</strong>
-        <button class="btn btn-outline btn-sm" id="btnReset">Reset</button>
+        <button class="btn btn--outline btn--sm" id="btnReset">Reset</button>
       </div>
-      <div class="highlight-box">
-        <div class="info-row"><span>💰 Total setor</span><span class="val text-lg" id="totalSetorDisplay">0</span></div>
-        <div class="info-row"><span>📆 Total hari</span><span class="val" id="totalHariDisplay">0</span></div>
+      <div class="highlight">
+        <div class="highlight__row"><span>💰 Total setor</span><span class="highlight__val highlight__val--lg" id="totalSetorDisplay">0</span></div>
+        <div class="highlight__row"><span>📆 Total hari</span><span class="highlight__val" id="totalHariDisplay">0</span></div>
       </div>
     </div>
     <div class="card">
-      <table><thead><tr><th>Tgl</th><th>Setor</th><th>Hari</th><th>Saldo</th></tr></thead>
-      <tbody id="tabelBody"></tbody></table>
+      <table class="table">
+        <thead><tr><th>Tgl</th><th>Setor</th><th>Hari</th><th>Saldo</th></tr></thead>
+        <tbody id="tabelBody"></tbody>
+      </table>
       <div class="empty" id="tabelKosong">Belum ada transaksi</div>
     </div>
   </div>
 
   <!-- Struk Hidden -->
-  <div id="strukWrapper"><div class="struk-thermal" id="strukContent"></div></div>
+  <div class="struk-wrapper"><div class="struk" id="strukContent"></div></div>
 
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <!-- Modal Edit -->
   <div class="modal-overlay" id="modalEdit">
-    <div class="modal"><h3>✏️ Edit Setoran</h3><label>Nominal Baru</label>
-    <input type="number" id="editNominal" min="0"><input type="hidden" id="editIndex">
-    <div class="btn-row"><button class="btn btn-outline btn-sm" id="btnBatalEdit">Batal</button>
-    <button class="btn btn-sm" id="btnSimpanEdit">Simpan</button></div></div>
+    <div class="modal">
+      <h3 class="modal__title">✏️ Edit Setoran</h3>
+      <label class="form-label">Nominal Baru</label>
+      <input type="number" id="editNominal" class="form-input" min="0">
+      <input type="hidden" id="editIndex">
+      <div class="btn__row">
+        <button class="btn btn--outline btn--sm" id="btnBatalEdit">Batal</button>
+        <button class="btn btn--sm" id="btnSimpanEdit">Simpan</button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal Hapus -->
   <div class="modal-overlay" id="modalHapus">
-    <div class="modal"><h3>🗑️ Hapus Setoran?</h3><p class="text-sm" id="hapusInfo" style="margin-bottom:12px;"></p>
-    <input type="hidden" id="hapusIndex"><div class="btn-row">
-    <button class="btn btn-outline btn-sm" id="btnBatalHapus">Batal</button>
-    <button class="btn btn-danger btn-sm" id="btnKonfirmasiHapus">Hapus</button></div></div>
+    <div class="modal">
+      <h3 class="modal__title">🗑️ Hapus Setoran?</h3>
+      <p class="text-sm" id="hapusInfo" style="margin-bottom:12px;"></p>
+      <input type="hidden" id="hapusIndex">
+      <div class="btn__row">
+        <button class="btn btn--outline btn--sm" id="btnBatalHapus">Batal</button>
+        <button class="btn btn--danger btn--sm" id="btnKonfirmasiHapus">Hapus</button>
+      </div>
+    </div>
   </div>
 
   <!-- JS -->
-  <script src="/jimpitan-bali/js/app.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
