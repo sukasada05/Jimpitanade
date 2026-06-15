@@ -2,8 +2,8 @@
   "name": "Jimpitan Bali - Mangsatria",
   "short_name": "Jimpitan Bali",
   "description": "Tabungan Jimpitan Harian Sistem Kalender Bali - 6 Sasih",
-  "start_url": "/jimpitan-bali/",
-  "scope": "/jimpitan-bali/",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f5f3f0",
@@ -20,5 +20,6 @@
       "type": "image/png"
     }
   ],
-  "categories": ["finance", "utilities"]
+  "categories": ["finance", "utilities"],
+  "lang": "id"
 }
