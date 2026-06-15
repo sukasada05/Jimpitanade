@@ -1,97 +1,70 @@
 /* ============================================================
-   JIMPITAN BALI - Style Custom (Tailwind CDN sebagai base)
+   JIMPITAN BALI - Custom Stylesheet
+   Melengkapi Tailwind CSS CDN
    ============================================================ */
 
-/* ---------- CUSTOM PROPERTIES (Overrides Tailwind) ---------- */
-:root {
-  --clr-accent: #c8a27a;
-  --clr-accent-light: #faf7f2;
-  --clr-wa: #075e54;
-  --clr-danger: #d94a4a;
-  --ff-mono: 'JetBrains Mono', 'Courier New', monospace;
+/* Tab Active State */
+.tab-btn--active {
+  background: #fff !important;
+  color: #000 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* ---------- STRUK THERMAL ---------- */
-.struk-wrapper {
-  position: fixed;
-  left: -9999px;
-  top: 0;
-  z-index: -1;
+/* Panel */
+.panel {
+  display: none;
+}
+.panel--active {
+  display: block;
 }
 
-.struk {
-  width: 320px;
-  background: #fff;
-  font-family: var(--ff-mono);
-  font-size: 11px;
-  color: #000;
-  padding: 10px 12px;
-  line-height: 1.4;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: unset;
-}
-
+/* Struk Thermal */
 .struk .center {
   text-align: center;
 }
-
 .struk .judul {
   font-weight: 700;
   font-size: 12px;
 }
-
 .struk .sub {
   font-size: 10px;
 }
-
 .struk .garis {
   border-top: 1px dashed #000;
   margin: 5px 0;
 }
-
 .struk .garis-tebal {
   border-top: 2px solid #000;
   margin: 5px 0;
 }
-
 .struk .row {
   display: flex;
   justify-content: space-between;
 }
-
 .struk .kanan {
   text-align: right;
 }
-
 .struk .total {
   font-size: 12px;
   font-weight: 700;
 }
 
-/* ---------- TOAST ---------- */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1a1a1a;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  z-index: 200;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
+/* Toast */
 .toast.show {
   opacity: 1;
 }
 
-/* ---------- PRINT ---------- */
+/* Modal */
+.modal-overlay.show {
+  display: flex;
+}
+
+/* Empty State */
+.empty-state {
+  color: #ccc;
+}
+
+/* Print */
 @media print {
   body * {
     visibility: hidden;
@@ -101,12 +74,21 @@
     visibility: visible;
   }
   .struk-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
   }
   .struk {
-    width: 100%;
+    width: 100% !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
