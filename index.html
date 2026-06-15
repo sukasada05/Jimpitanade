@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Jimpitan Bali - Tabungan Harian Sistem Kalender Bali 6 Sasih">
+  <meta name="author" content="Mangsatria">
   <title>Jimpitan Bali - Mangsatria</title>
 
   <!-- PWA -->
@@ -12,9 +14,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Jimpitan Bali">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
 
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <script>
     tailwind.config = {
       theme: {
@@ -25,8 +30,38 @@
             wa: '#075e54',
             'wa-dark': '#05473e',
             danger: '#d94a4a',
+            'danger-light': '#fff5f5',
             green: '#2d5a2a',
-          }
+            surface: '#ffffff',
+            border: '#eae7e2',
+            'border-light': '#f5f3f0',
+            muted: '#aaa',
+            sub: '#999',
+          },
+          fontFamily: {
+            mono: ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+          },
+          fontSize: {
+            '2xs': '0.7rem',
+            'xs': '0.78rem',
+            'sm': '0.85rem',
+            'base': '0.9rem',
+            'md': '0.95rem',
+            'lg': '1.1rem',
+            'xl': '1.3rem',
+          },
+          borderRadius: {
+            'card': '18px',
+            'btn': '30px',
+            'input': '12px',
+            'chip': '20px',
+            'tab': '14px',
+          },
+          boxShadow: {
+            'card': '0 1px 3px rgba(0, 0, 0, 0.03)',
+            'tab': '0 2px 8px rgba(0, 0, 0, 0.06)',
+            'modal': '0 20px 50px rgba(0, 0, 0, 0.2)',
+          },
         }
       }
     }
@@ -43,8 +78,9 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- html2canvas -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- html2canvas CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
+  </script>
 </head>
 <body class="bg-[#f5f3f0] text-[#1a1a1a] font-sans antialiased">
 
@@ -58,150 +94,163 @@
     </header>
 
     <!-- Tabs -->
-    <nav class="flex gap-0 mb-[18px] bg-[#eae5dc] rounded-2xl p-[3px]">
-      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-[11px] font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap active" data-tab="setup">
-        <i class="bi bi-gear"></i> Atur
+    <nav class="tabs-nav flex gap-0 mb-[18px] bg-[#eae5dc] rounded-tab p-[3px]">
+      <button class="tab-btn tab-btn--active flex-1 border-none bg-transparent py-2.5 px-1 text-2xs font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="setup">
+        <i class="bi bi-gear-fill"></i> Atur
       </button>
-      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-[11px] font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="setor">
+      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-2xs font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="setor">
         <i class="bi bi-cash-coin"></i> Setor
       </button>
-      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-[11px] font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="edit">
-        <i class="bi bi-pencil"></i> Edit
+      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-2xs font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="edit">
+        <i class="bi bi-pencil-fill"></i> Edit
       </button>
-      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-[11px] font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="riwayat">
+      <button class="tab-btn flex-1 border-none bg-transparent py-2.5 px-1 text-2xs font-semibold text-[#777] rounded-xl cursor-pointer transition-all whitespace-nowrap" data-tab="riwayat">
         <i class="bi bi-journal-text"></i> Riwayat
       </button>
     </nav>
 
-    <!-- Panel Setup -->
-    <div class="panel active" id="setup">
-      <div class="bg-white rounded-[18px] p-[18px] mb-[14px] shadow-sm">
-        <label class="block text-[11px] uppercase tracking-wide text-[#999] font-semibold mb-1">Nasabah</label>
-        <input list="nasabahList" id="namaNasabah" class="w-full border border-[#eae7e2] rounded-xl p-3 text-[15px] bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all" placeholder="Pilih atau ketik nama" value="Ni Luh Sari" autocomplete="off">
+    <!-- ========== PANEL SETUP ========== -->
+    <div class="panel panel--active" id="setup">
+      <div class="card bg-surface rounded-card p-[18px] mb-[14px] shadow-card">
+        <label class="form-label block text-2xs uppercase tracking-wide text-sub font-semibold mb-1">Nasabah</label>
+        <input list="nasabahList" id="namaNasabah" class="form-input w-full border border-border rounded-input p-3 text-md bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all" placeholder="Pilih atau ketik nama" value="Ni Luh Sari" autocomplete="off">
         <datalist id="nasabahList">
-          <option value="Ni Luh Sari"><option value="I Made Arta"><option value="I Nyoman Budi">
-          <option value="Ni Ketut Ayu"><option value="I Gusti Ngurah"><option value="I Kadek Dewi">
+          <option value="Ni Luh Sari">
+          <option value="I Made Arta">
+          <option value="I Nyoman Budi">
+          <option value="Ni Ketut Ayu">
+          <option value="I Gusti Ngurah">
+          <option value="I Kadek Dewi">
         </datalist>
         <div class="flex gap-[10px]">
           <div class="flex-1">
-            <label class="block text-[11px] uppercase tracking-wide text-[#999] font-semibold mb-1">Target/hari</label>
-            <input type="number" id="targetHarian" class="w-full border border-[#eae7e2] rounded-xl p-3 text-[15px] bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" value="2000" min="500" step="500">
+            <label class="form-label block text-2xs uppercase tracking-wide text-sub font-semibold mb-1">Target/hari</label>
+            <input type="number" id="targetHarian" class="form-input w-full border border-border rounded-input p-3 text-md bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" value="2000" min="500" step="500">
           </div>
           <div class="flex-1">
-            <label class="block text-[11px] uppercase tracking-wide text-[#999] font-semibold mb-1">Desa</label>
-            <input type="text" id="desa" class="w-full border border-[#eae7e2] rounded-xl p-3 text-[15px] bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" value="Desa Padang Bulia">
+            <label class="form-label block text-2xs uppercase tracking-wide text-sub font-semibold mb-1">Desa</label>
+            <input type="text" id="desa" class="form-input w-full border border-border rounded-input p-3 text-md bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" value="Desa Padang Bulia">
           </div>
         </div>
-        <button id="btnMulai" class="w-full bg-[#1a1a1a] text-white border-none rounded-[30px] py-[13px] font-semibold text-[15px] cursor-pointer mt-1 hover:opacity-90 active:bg-[#333] transition-all">
+        <button id="btnMulai" class="btn-primary w-full bg-[#1a1a1a] text-white border-none rounded-btn py-[13px] font-semibold text-base cursor-pointer mt-1 hover:opacity-90 active:bg-[#333] transition-all">
           <i class="bi bi-play-fill"></i> Mulai Tabungan
         </button>
       </div>
     </div>
 
-    <!-- Panel Setor -->
+    <!-- ========== PANEL SETOR ========== -->
     <div class="panel" id="setor">
-      <div class="bg-white rounded-[18px] p-[18px] mb-[14px] shadow-sm">
+      <div class="card bg-surface rounded-card p-[18px] mb-[14px] shadow-card">
         <div class="flex justify-between items-center mb-[10px]">
-          <strong id="namaSetor" class="text-[15px]">-</strong>
-          <span class="text-xs text-[#888]" id="targetSetor">-</span>
+          <strong id="namaSetor" class="text-base">-</strong>
+          <span class="text-xs text-sub" id="targetSetor">-</span>
         </div>
-        <label class="block text-[11px] uppercase tracking-wide text-[#999] font-semibold mb-1">Nominal Setor</label>
+        <label class="form-label block text-2xs uppercase tracking-wide text-sub font-semibold mb-1">Nominal Setor</label>
         <div class="flex gap-2 flex-wrap mb-3" id="chipRow">
-          <span class="chip px-[14px] py-2 rounded-[20px] border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="1">1 hari</span>
-          <span class="chip px-[14px] py-2 rounded-[20px] border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="2">2 hari</span>
-          <span class="chip px-[14px] py-2 rounded-[20px] border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="3">3 hari</span>
-          <span class="chip px-[14px] py-2 rounded-[20px] border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="5">5 hari</span>
-          <span class="chip px-[14px] py-2 rounded-[20px] border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="7">7 hari</span>
+          <span class="chip inline-block px-[14px] py-2 rounded-chip border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="1">1 hari</span>
+          <span class="chip inline-block px-[14px] py-2 rounded-chip border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="2">2 hari</span>
+          <span class="chip inline-block px-[14px] py-2 rounded-chip border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="3">3 hari</span>
+          <span class="chip inline-block px-[14px] py-2 rounded-chip border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="5">5 hari</span>
+          <span class="chip inline-block px-[14px] py-2 rounded-chip border border-[#ddd] bg-white text-xs font-semibold cursor-pointer text-[#555] active:bg-[#f0ebe2] active:border-accent transition-all" data-hari="7">7 hari</span>
         </div>
-        <input type="number" id="nominalSetor" class="w-full border border-[#eae7e2] rounded-xl p-3 text-[15px] bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" placeholder="Nominal bebas" min="0">
-        <button id="btnSetor" class="w-full bg-wa text-white border-none rounded-[30px] py-[13px] font-semibold text-[15px] cursor-pointer mt-1 hover:opacity-90 active:bg-wa-dark transition-all">
+        <input type="number" id="nominalSetor" class="form-input w-full border border-border rounded-input p-3 text-md bg-[#fafaf9] mb-[10px] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20" placeholder="Nominal bebas" min="0">
+        <button id="btnSetor" class="btn-wa w-full bg-wa text-white border-none rounded-btn py-[13px] font-semibold text-base cursor-pointer mt-1 hover:opacity-90 active:bg-wa-dark transition-all">
           <i class="bi bi-whatsapp"></i> Setor & Kirim WA
         </button>
       </div>
-      <div class="bg-white rounded-[18px] p-[18px] mb-[14px] shadow-sm">
-        <div class="flex justify-between text-xs text-[#888] mb-1">
+      <div class="card bg-surface rounded-card p-[18px] mb-[14px] shadow-card">
+        <div class="flex justify-between text-xs text-sub mb-1">
           <span>Progress</span><span><strong id="hariDibayar">0</strong> / 210</span>
         </div>
-        <div class="h-[6px] bg-[#eae5dc] rounded-[6px] my-[10px] overflow-hidden">
-          <div class="h-full bg-accent rounded-[6px] transition-all duration-300" id="progressFill" style="width:0%"></div>
+        <div class="progress-bar h-[6px] bg-[#eae5dc] rounded-[6px] my-[10px] overflow-hidden">
+          <div class="progress-fill h-full bg-accent rounded-[6px] transition-all duration-300" id="progressFill" style="width:0%"></div>
         </div>
-        <div class="flex justify-between text-xs text-[#888]">
+        <div class="flex justify-between text-xs text-sub">
           <span id="sisaHari">210 tersisa</span><span id="ketLebih"></span>
         </div>
       </div>
     </div>
 
-    <!-- Panel Edit -->
+    <!-- ========== PANEL EDIT ========== -->
     <div class="panel" id="edit">
-      <div class="bg-white rounded-[18px] p-[18px] mb-[14px] shadow-sm">
+      <div class="card bg-surface rounded-card p-[18px] mb-[14px] shadow-card">
         <div class="flex justify-between items-center mb-3">
-          <strong id="namaEdit" class="text-[15px]">-</strong>
-          <span class="text-xs text-[#888]" id="jmlTransaksi">0</span>
+          <strong id="namaEdit" class="text-base">-</strong>
+          <span class="text-xs text-sub" id="jmlTransaksi">0</span>
         </div>
         <div id="editList"></div>
-        <div class="text-center text-[#ccc] py-[30px]" id="editKosong">Belum ada transaksi</div>
+        <div class="empty-state text-center text-muted py-[30px]" id="editKosong">Belum ada transaksi</div>
       </div>
     </div>
 
-    <!-- Panel Riwayat -->
+    <!-- ========== PANEL RIWAYAT ========== -->
     <div class="panel" id="riwayat">
-      <div class="bg-white rounded-[18px] p-[18px] mb-[14px] shadow-sm">
+      <div class="card bg-surface rounded-card p-[18px] mb-[14px] shadow-card">
         <div class="flex justify-between items-center mb-2">
-          <strong id="namaRiwayat" class="text-[15px]">-</strong>
-          <button id="btnReset" class="bg-white text-[#1a1a1a] border border-[#ddd] rounded-[30px] px-4 py-2 text-xs font-semibold cursor-pointer hover:bg-[#f5f3f0] transition-all">
+          <strong id="namaRiwayat" class="text-base">-</strong>
+          <button id="btnReset" class="btn-outline bg-white text-[#1a1a1a] border border-[#ddd] rounded-btn px-4 py-2 text-xs font-semibold cursor-pointer hover:bg-[#f5f3f0] transition-all">
             <i class="bi bi-arrow-counterclockwise"></i> Reset
           </button>
         </div>
-        <div class="bg-accent-light rounded-xl p-3 my-2">
+        <div class="highlight bg-accent-light rounded-input p-3 my-2">
           <div class="flex justify-between py-1 text-xs"><span>💰 Total setor</span><span class="font-bold text-lg" id="totalSetorDisplay">0</span></div>
           <div class="flex justify-between py-1 text-xs"><span>📆 Total hari</span><span class="font-semibold" id="totalHariDisplay">0</span></div>
         </div>
       </div>
-      <div class="bg-white rounded-[18px] p-[18px] shadow-sm">
+      <div class="card bg-surface rounded-card p-[18px] shadow-card">
         <table class="w-full border-collapse text-xs">
-          <thead><tr><th class="text-left p-2 text-[#aaa] font-semibold uppercase border-b border-[#eae7e2]">Tgl</th><th class="text-left p-2 text-[#aaa] font-semibold uppercase border-b border-[#eae7e2]">Setor</th><th class="text-left p-2 text-[#aaa] font-semibold uppercase border-b border-[#eae7e2]">Hari</th><th class="text-left p-2 text-[#aaa] font-semibold uppercase border-b border-[#eae7e2]">Saldo</th></tr></thead>
+          <thead>
+            <tr>
+              <th class="text-left p-2 text-muted font-semibold uppercase border-b border-border">Tgl</th>
+              <th class="text-left p-2 text-muted font-semibold uppercase border-b border-border">Setor</th>
+              <th class="text-left p-2 text-muted font-semibold uppercase border-b border-border">Hari</th>
+              <th class="text-left p-2 text-muted font-semibold uppercase border-b border-border">Saldo</th>
+            </tr>
+          </thead>
           <tbody id="tabelBody"></tbody>
         </table>
-        <div class="text-center text-[#ccc] py-[30px]" id="tabelKosong">Belum ada transaksi</div>
+        <div class="empty-state text-center text-muted py-[30px]" id="tabelKosong">Belum ada transaksi</div>
       </div>
     </div>
 
   </div>
 
-  <!-- Struk Hidden -->
-  <div class="struk-wrapper"><div class="struk" id="strukContent"></div></div>
+  <!-- ========== STRUK HIDDEN ========== -->
+  <div class="struk-wrapper fixed left-[-9999px] top-0 z-[-1]">
+    <div class="struk w-[320px] bg-white font-mono text-[11px] text-black p-[10px_12px] leading-[1.4] antialiased-none" id="strukContent"></div>
+  </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
+  <!-- ========== TOAST ========== -->
+  <div class="toast fixed bottom-[30px] left-1/2 -translate-x-1/2 bg-[#1a1a1a] text-white py-3 px-6 rounded-btn text-sm font-semibold z-[200] opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap" id="toast"></div>
 
-  <!-- Modal Edit -->
-  <div class="fixed inset-0 bg-black/40 hidden items-center justify-center z-[100]" id="modalEdit">
-    <div class="bg-white rounded-[18px] p-5 w-[90%] max-w-[380px] shadow-2xl">
-      <h3 class="text-base mb-3"><i class="bi bi-pencil"></i> Edit Setoran</h3>
-      <label class="block text-[11px] uppercase tracking-wide text-[#999] font-semibold mb-1">Nominal Baru</label>
-      <input type="number" id="editNominal" class="w-full border border-[#eae7e2] rounded-xl p-3 text-[15px] bg-[#fafaf9] mb-3 outline-none focus:border-accent" min="0">
+  <!-- ========== MODAL EDIT ========== -->
+  <div class="modal-overlay fixed inset-0 bg-black/40 hidden items-center justify-center z-[100]" id="modalEdit">
+    <div class="modal bg-surface rounded-card p-5 w-[90%] max-w-[380px] shadow-modal">
+      <h3 class="text-base mb-3 font-bold"><i class="bi bi-pencil-fill"></i> Edit Setoran</h3>
+      <label class="form-label block text-2xs uppercase tracking-wide text-sub font-semibold mb-1">Nominal Baru</label>
+      <input type="number" id="editNominal" class="form-input w-full border border-border rounded-input p-3 text-md bg-[#fafaf9] mb-3 outline-none focus:border-accent" min="0">
       <input type="hidden" id="editIndex">
       <div class="flex gap-2">
-        <button id="btnBatalEdit" class="flex-1 bg-white text-[#1a1a1a] border border-[#ddd] rounded-[30px] py-2 px-4 text-xs font-semibold cursor-pointer">Batal</button>
-        <button id="btnSimpanEdit" class="flex-1 bg-[#1a1a1a] text-white border-none rounded-[30px] py-2 px-4 text-xs font-semibold cursor-pointer">Simpan</button>
+        <button id="btnBatalEdit" class="btn-outline flex-1 bg-white text-[#1a1a1a] border border-[#ddd] rounded-btn py-2 px-4 text-xs font-semibold cursor-pointer">Batal</button>
+        <button id="btnSimpanEdit" class="btn-primary flex-1 bg-[#1a1a1a] text-white border-none rounded-btn py-2 px-4 text-xs font-semibold cursor-pointer">Simpan</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Hapus -->
-  <div class="fixed inset-0 bg-black/40 hidden items-center justify-center z-[100]" id="modalHapus">
-    <div class="bg-white rounded-[18px] p-5 w-[90%] max-w-[380px] shadow-2xl">
-      <h3 class="text-base mb-3"><i class="bi bi-trash"></i> Hapus Setoran?</h3>
-      <p class="text-xs text-[#888] mb-3" id="hapusInfo"></p>
+  <!-- ========== MODAL HAPUS ========== -->
+  <div class="modal-overlay fixed inset-0 bg-black/40 hidden items-center justify-center z-[100]" id="modalHapus">
+    <div class="modal bg-surface rounded-card p-5 w-[90%] max-w-[380px] shadow-modal">
+      <h3 class="text-base mb-3 font-bold"><i class="bi bi-trash-fill"></i> Hapus Setoran?</h3>
+      <p class="text-xs text-sub mb-3" id="hapusInfo"></p>
       <input type="hidden" id="hapusIndex">
       <div class="flex gap-2">
-        <button id="btnBatalHapus" class="flex-1 bg-white text-[#1a1a1a] border border-[#ddd] rounded-[30px] py-2 px-4 text-xs font-semibold cursor-pointer">Batal</button>
-        <button id="btnKonfirmasiHapus" class="flex-1 bg-white text-danger border border-[#fcc] rounded-[30px] py-2 px-4 text-xs font-semibold cursor-pointer">Hapus</button>
+        <button id="btnBatalHapus" class="btn-outline flex-1 bg-white text-[#1a1a1a] border border-[#ddd] rounded-btn py-2 px-4 text-xs font-semibold cursor-pointer">Batal</button>
+        <button id="btnKonfirmasiHapus" class="btn-danger flex-1 bg-white text-danger border border-[#fcc] rounded-btn py-2 px-4 text-xs font-semibold cursor-pointer hover:bg-danger-light">Hapus</button>
       </div>
     </div>
   </div>
 
-  <!-- JS -->
+  <!-- ========== JS ========== -->
   <script src="js/app.js"></script>
 </body>
 </html>
