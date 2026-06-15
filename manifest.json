@@ -23,3 +23,4 @@
   "categories": ["finance", "utilities"],
   "lang": "id"
 }
+{"name":"Jimpitan Bali","short_name":"Jimpitan","start_url":".","display":"standalone","theme_color":"#ffffff","background_color":"#f0f4f8","icons":[{"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}]}
